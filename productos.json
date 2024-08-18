@@ -1,0 +1,12 @@
+[
+    { "id": 1, "nombre": "Iphone 13", "precio": 500, "imagen": "./assets/iphone13-tienda.png" },
+    { "id": 2, "nombre": "Iphone 14", "precio": 600, "imagen": "./assets/iphone14-tienda.png" },
+    { "id": 3, "nombre": "Iphone 15", "precio": 700, "imagen": "./assets/iphone15-tienda.png" },
+    { "id": 4, "nombre": "Iphone 15 Pro", "precio": 800, "imagen": "./assets/iphone15pro-tienda.png" },
+    { "id": 5, "nombre": "MacBook M2", "precio": 900, "imagen": "./assets/macbookairm2-tienda.png" },
+    { "id": 6, "nombre": "Watch Hermes", "precio": 300, "imagen": "./assets/watchhermes-tienda.jpeg" },
+    { "id": 7, "nombre": "Watch S9", "precio": 400, "imagen": "./assets/watchs9-tienda.jpeg" },
+    { "id": 8, "nombre": "Watch SE", "precio": 500, "imagen": "./assets/watchse-tienda.jpeg" },
+    { "id": 9, "nombre": "Watch Ultra", "precio": 600, "imagen": "./assets/watchultra-tienda.jpeg" },
+    { "id": 10, "nombre": "MacBook M3", "precio": 700, "imagen": "./assets/macbookm3-tienda.jpeg" }
+]

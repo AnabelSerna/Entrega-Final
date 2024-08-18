@@ -1,19 +1,18 @@
 
-const productos = [
-    { id: 1, nombre: 'Iphone 13', precio: 500, imagen: './assets/iphone13-tienda.png' },
-    { id: 2, nombre: 'Iphone 14', precio: 600, imagen: './assets/iphone14-tienda.png' },
-    { id: 3, nombre: 'Iphone 15', precio: 700, imagen: './assets/iphone15-tienda.png' },
-    { id: 4, nombre: 'Iphone 15 Pro', precio: 800, imagen: './assets/iphone15pro-tienda.png' },
-    { id: 5, nombre: 'MacBook M2', precio: 900, imagen: './assets/macbookairm2-tienda.png' },
-    { id: 6, nombre: 'Watch Hermes', precio: 300, imagen: './assets/watchhermes-tienda.jpeg' },
-    { id: 7, nombre: 'Watch S9', precio: 400, imagen: './assets/watchs9-tienda.jpeg' },
-    { id: 8, nombre: 'Watch SE', precio: 500, imagen: './assets/watchse-tienda.jpeg' },
-    { id: 9, nombre: 'Watch Ultra', precio: 600, imagen: './assets/watchultra-tienda.jpeg' },
-    { id: 10, nombre: 'MacBook M3', precio: 700, imagen: './assets/macbookm3-tienda.jpeg' },
-];
+async function cargarProductos() {
+    try {
+        const response = await fetch('productos.json');
+        if (!response.ok) throw new Error('No se pudo cargar el archivo de productos.');
+        return await response.json();
+    } catch (error) {
+        console.error('Error al cargar productos:', error);
+        return [];
+    }
+}
 
 
-function mostrarProductos() {
+async function mostrarProductos() {
+    const productos = await cargarProductos();
     const container = document.getElementById('productos-container');
     container.innerHTML = '';
 
@@ -31,14 +30,13 @@ function mostrarProductos() {
         container.appendChild(productoDiv);
     });
 
-
     document.querySelectorAll('.agregar-al-carrito').forEach(button => {
         button.addEventListener('click', agregarAlCarrito);
     });
 }
 
 
-function agregarAlCarrito(event) {
+async function agregarAlCarrito(event) {
     const idProducto = parseInt(event.target.getAttribute('data-id'));
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
@@ -46,8 +44,13 @@ function agregarAlCarrito(event) {
     if (productoEnCarrito) {
         productoEnCarrito.cantidad += 1;
     } else {
-        const producto = productos.find(p => p.id === idProducto);
-        carrito.push({ ...producto, cantidad: 1 });
+        try {
+            const productos = await cargarProductos();
+            const producto = productos.find(p => p.id === idProducto);
+            carrito.push({ ...producto, cantidad: 1 });
+        } catch (error) {
+            console.error('Error al cargar productos:', error);
+        }
     }
 
     localStorage.setItem('carrito', JSON.stringify(carrito));
@@ -73,7 +76,6 @@ function mostrarCarrito() {
         carritoList.appendChild(itemDiv);
     });
 
-
     document.querySelectorAll('.eliminar-del-carrito').forEach(button => {
         button.addEventListener('click', eliminarDelCarrito);
     });
@@ -98,6 +100,7 @@ function vaciarCarrito() {
 
 
 document.getElementById('vaciar-carrito').addEventListener('click', vaciarCarrito);
+
 
 mostrarProductos();
 mostrarCarrito();
